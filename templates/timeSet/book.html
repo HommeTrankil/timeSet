@@ -1,0 +1,115 @@
+{% load i18n staticfiles mezzanine_tags blog_tags %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/bootstrap-datetimepicker/4.17.44/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<script src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="//cdn.bootcss.com/moment.js/2.17.1/moment.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap-datetimepicker/4.17.44/js/bootstrap-datetimepicker.min.js"></script>
+
+<!-- font-awesome icons -->
+<link href="{% static "css/font-awesome.min.css" %}" rel="stylesheet" type="text/css" media="all" />
+</head>
+
+<body onmouseover="getdt()">
+
+<div class="container">
+
+<h1>Booking</h1>
+
+<p>{% lorem 2 p random %}</p>
+      <form action="" method="POST" class="post-form" enctype="multipart/form-data">
+	{% csrf_token %}
+<label>Name</label><br>
+{{ form.name }}<br>
+
+<label>Phone</label><br>
+{{ form.phone }}<br>
+
+
+<label>eMail</label><br>
+{{ form.email }}<br>
+
+<label>Service</label><br>
+{{ form.service }}<br>
+
+<label>Time</label><br>
+	<div style="display:none">
+        {{ form.holiday_date }}
+        {{ form.contact_time }}
+    </div>
+                <div class='input-group date' id='datetimepicker1'>
+                    <input id="textbox_id" type='text' class="form-control input-group-addon" onmouseover="getdt()" onclick="getdt()"/><i class="fa fa-calendar-alt"></i>
+
+                </div>
+
+
+<label>Comment</label><br>
+{{ form.comment }}<br>
+
+<label>Confirmation</label><br>
+  <div class="row">
+    <div class="col-sm-2">
+        <img src="http://campus.albion.edu/michiganalive/files/2011/05/EasternScreechOwl_red-150x150.jpg">
+    </div>
+    <div class="col-sm-10">
+        <p>{% lorem 10 w random %}</p>
+        <input type="text">
+    </div>
+</div>
+<br>
+
+
+  <input type="submit" value="Send">
+    </form>
+<p>This is your rendez-vous time and date :</p>
+<span id="ddd">---</span>
+<br>
+
+</div>
+
+
+
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
+
+            function getdt(){
+                var str = document.getElementById('textbox_id').value;
+                var p1 = str.split(" ");
+
+                 document.getElementById("ddd").innerHTML = str;
+
+
+
+                 var tmp="";
+                 var res =[];
+
+
+                 for (var i=0;i<str.length;i++){
+                if (str[i]===' ' || str[i]==='/' || str[i]===':'){
+                    res .push(tmp);
+                    tmp = "";
+                }else {
+                    tmp += str[i];
+                }
+
+
+                 }
+
+                 document.getElementById("id_holiday_date").value = res[2]+'-'+res[0]+'-'+res[1];
+                 document.getElementById("id_contact_time").value = res[3]+':'+res[4]+':00';
+
+            }
+
+
+        </script>
+
+</body>
+</html>
